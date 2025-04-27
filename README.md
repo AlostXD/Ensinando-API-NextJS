@@ -174,7 +174,7 @@ export default async function Home() {
 - Retorna uma div (Somente para centralizar eles)
 - Dentro desta div é gerado um info.map que irá criar nosso código com as informações colocadas no banco de dados.
 
-## 9 - Salvando as alterações com um Commit
+## 9 - Salvando as alterações com um Commit (OBS: Leia o final do arquivo quando chegar aqui, IMPORTANTE)
 
 - Para salvar nosso arquivo no Github para que a Vercel consiga fazer o deploy, devemos commitar no Github para salvar as informações novas.
 
@@ -197,3 +197,13 @@ npm run dev
 ```
 
 - Após isso, escreva "https://localhost/3000" no seu navegador ou clique no link do terminal com CTRL + Clique esquerdo.
+
+
+
+## IMPORTANTE / AVISO
+
+- Como isso foi um teste com o foco pra ensinar como uma API pode ser criada com o Prisma, PostgreSQL e Typescript, não terá um foco tão grande com o Next.
+
+- Next foi somente um Framework escolhido para facilitar e mostrar também como seria a estrutura de pastas... O Deploy no final vai falhar por várias questões (Alteração em regras do eslint, package.json, etc...).
+
+- Leve em consideração que, em partes futuras, não será necessário fazer essa "semeação" de informações, tendo em vista que o banco de dados terá as informações colocadas de diversas formas (Colocados pelo Manager da Database, inserido manualmente pelo service que utiliza, dentre outros...).
