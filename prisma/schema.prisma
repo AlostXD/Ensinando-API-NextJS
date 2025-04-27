@@ -20,6 +20,6 @@ datasource db {
 model teste {
   id      Int    @id @default(autoincrement()) // Campo ID com incremento automático
   nome    String // Campo nome
-  idade   int // Campo idade
+  idade   Int // Campo idade
   curso   String // Campo de cursos
 }
