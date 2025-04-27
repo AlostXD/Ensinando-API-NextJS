@@ -56,15 +56,26 @@ model [nome]{
 ETAPAS DA CRIAÇÃO
 
 1- Crie um repositório no Github com o arquivo do Next;
+
 2- Faça o push dos arquivos para estar semeando o repositório com o Next.js;
+
 3- Abra o site da [Vercel](https://vercel.com) e crie sua conta;
+
 4- Na Dashboard, adicione um novo repositório conectando pelo seu Github; (Vercel importa seus repositórios diretamente de lá)
+
 5- Na parte de selecionar, escola o repositório criado e, caso não apareça, selecione o Framework de Deployment como Next.js; (Normalmente, em projetos criados pelo npx create em Next, ele já é identificado de forma automática pela Vercel.)
+
 6- Após o Deploy for concluído, acesse a página do seu arquivo na Vercel e na barra de navegação superior, escolha a opção "Storage";
+
 7- Clique em "Create Database" e selecione a Database Neon. Coloque também a localização de São Paulo; (Selecione o Plano Gratuíto)
+
 8- Caso a Database tenha sido criada de forma correta, você será encaminhado pra página aonde terá as configurações para o Connect do Banco de dados. No canto direito, clique em "Copy Snippet" para copiar as configurações;
+
 9- Acesse o arquivo .env e cole as configurações copiadas da Vercel;
+
 10(Final)- Escreva no Terminal ```npx prisma migrate dev``` para fazer a migração do banco de dados e criar nossa tabela.
+
+
 
 - Caso tenha funcionado, uma pasta com a data e o nome da sua migração (Colocado no Terminal) será criada.
 
@@ -127,71 +138,62 @@ npm run seed
 
 - Se tudo estiver configurado corretamente, você verá a mensagem `Database seeded successfully!` no terminal.
 
+- Delete o código da função "main" após semear o banco.
+
 ## 8 - Configurando o Front
 
+- Acesse o page.tsx e escreva este código
+
+```jsx
+import prisma from "./lib/prisma";
 
 
+export default async function Home() {
+  const info = await prisma.teste.findMany();
 
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center min-h-screen p-2">
+        {info.map((info) => (
+          <div key={info.id} className="p-4 m-2 bg-gray-200 rounded shadow text-black">
+            <h2 className="text-lg font-bold">{info.nome}</h2>
+            <p>Idade: {info.idade}</p>
+            <p>Curso: {info.curso}</p>
+          </div>
+          ))
+        }
+      </div>
+    </>
+  );
+}
+```
 
+- Este código importa a variável "prisma" que criamos na Lib
+- Cria uma função assíncrona Home() que irá ser a nossa página do site
+- Cria uma variável chamada info que vai fazer a busca no banco de dados com o findMany e retornar todas as informações que colocamos
+- Retorna uma div (Somente para centralizar eles)
+- Dentro desta div é gerado um info.map que irá criar nosso código com as informações colocadas no banco de dados.
 
+## 9 - Salvando as alterações com um Commit
 
+- Para salvar nosso arquivo no Github para que a Vercel consiga fazer o deploy, devemos commitar no Github para salvar as informações novas.
 
+```bash
+git add . // Adiciona todos os arquivos modificados
 
+git commit -m "texto para commit" // Faz o commit com o nome colocado
 
+git push origin main // Envia as alterações feitas para o arquivo no Github
+```
 
+- Com isso, seu site já vai estar funcionado com um Link disponibilizado pela Vercel. (Somente clique na foto do site no teu Dashboard)
 
+## 10 (Extra e Final) - Teste local do site com localhost
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+- Para testar localmente as modificações feitas sem subir um commit errado, utilize o seguinte comando:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Após isso, escreva "https://localhost/3000" no seu navegador ou clique no link do terminal com CTRL + Clique esquerdo.
