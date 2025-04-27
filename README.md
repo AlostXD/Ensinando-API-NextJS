@@ -1,83 +1,72 @@
 ## Ensinando uma API básica para um projeto em Next.js (Focado em estudos)
 
-- O Projeto foi feito com uma base do Next.js (npx create-next-app@latest)
-- Não será com foco no Front-End, mas terá um pouco de estilização para demonstração com Tailwind CSS.
+- O projeto foi feito com base no Next.js (npx create-next-app@latest).
+- Não será focado no Front-End, mas terá um pouco de estilização para demonstração com Tailwind CSS.
 
-## 1 - Comandos para a criação do Prisma (Explicado resumidamente só para achar)
+## 1 - Comandos para a criação do Prisma (Explicado resumidamente)
 
-1° APP - Essa é a pasta principal do nosso projeto, é a pasta aonde criamos os componentes para ser utilizado na renderização do site.
-- Dentro da pasta app, crie uma pasta lib e dentro dessa pasta lib crie um arquivo chamado prisma.ts
+1° APP - Essa é a pasta principal do nosso projeto, onde criamos os componentes para serem utilizados na renderização do site.
+- Dentro da pasta `app`, crie uma pasta `lib` e, dentro dessa pasta, crie um arquivo chamado `prisma.ts`.
 
-```
-npm i - Instala as dependências (Não precisa seguir os próximos passos se tiver feito isso)
-
+```bash
+npm i
+# Instala as dependências (Não precisa seguir os próximos passos se já tiver feito isso)
 
 npm i prisma
-# instala o Prisma no sistema
+# Instala o Prisma no sistema
 
 npx prisma init
-# Inicia o arquivo principal para utilizar o Prisma (Vai criar uma pasta Prisma e dentro dela terá o screma.prisma e o .env que terá nossa URL de conexão com o banco de dados em PostgreSQL.)
+# Inicia o arquivo principal para utilizar o Prisma (Vai criar uma pasta `prisma` e, dentro dela, o `schema.prisma` e o `.env` que terá nossa URL de conexão com o banco de dados em PostgreSQL.)
 ```
 
-## 2 - Criando o schema (Para conectar no banco de dados)
+## 2 - Criando o schema (Para conectar ao banco de dados)
 
-- Todo o código aqui abaixo está comentado no próprio arquivo caso precise ver.
+- Todo o código abaixo está comentado no próprio arquivo, caso precise consultar.
 
-```
+```prisma
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // Aqui está puxando a variável do nosso .env com o link de connect do nosso banco de dados
+  url      = env("DATABASE_URL") // Puxa a variável do nosso .env com o link de conexão do banco de dados
 }
-
 
 model teste {
   id      Int    @id @default(autoincrement()) // Campo ID com incremento automático
   nome    String // Campo nome
-  idade   Int // Campo idade
+  idade   Int    // Campo idade
   curso   String // Campo de cursos
 }
 ```
 
-model [nome]{
-    //informações....
-}
+- Esta é a forma básica de criar uma tabela no banco de dados. Antes de fazermos a conexão, precisamos primeiro criar o banco de dados.
 
-- Está é a forma básica de criar uma tabela no banco de dados. Antes de fazermos a conexão, precisamos primeiro criar o banco de dados.
+## 3 - Criando um banco de dados (Local ou Hospedado)
 
-## 3 - Criando um banco de dados (Local ou Hosteado)
+- Existem duas formas de fazer este projeto:
+1) Baixando o PostgreSQL Server localmente no seu PC e configurando-o como Host com o PGAdmin.
+2) Utilizando algum host que forneça as informações necessárias (Método que vamos utilizar).
 
-- Tem duas formas para fazer este projeto:
-1) Baixando o PostgreSQL Server localmente no seu PC e fazer ele de Host com o PGAdmin
-2) Utilizar alguma host que fornece as informações necessárias (Método que vamos utilizar)
+- Um host gratuito que fornece um banco de dados limitado para testes é a Vercel (criadora do Next.js).
 
-- Uma host gratuíta que fornece um banco de dados limitado para testes é a Vercel (Criadora do Next.JS)
+### Etapas da criação
 
+1. Crie um repositório no GitHub com o arquivo do Next.js.
+2. Faça o push dos arquivos para semear o repositório com o Next.js.
+3. Abra o site da [Vercel](https://vercel.com) e crie sua conta.
+4. Na Dashboard, adicione um novo repositório conectando pelo seu GitHub (a Vercel importa seus repositórios diretamente de lá).
+5. Na parte de seleção, escolha o repositório criado e, caso não apareça, selecione o framework de deployment como Next.js (normalmente, em projetos criados pelo `npx create-next-app`, ele já é identificado automaticamente pela Vercel).
+6. Após o deploy ser concluído, acesse a página do seu arquivo na Vercel e, na barra de navegação superior, escolha a opção "Storage".
+7. Clique em "Create Database" e selecione a Database Neon. Coloque também a localização de São Paulo (selecione o plano gratuito).
+8. Caso a Database tenha sido criada corretamente, você será encaminhado para a página onde estarão as configurações para o Connect do banco de dados. No canto direito, clique em "Copy Snippet" para copiar as configurações.
+9. Acesse o arquivo `.env` e cole as configurações copiadas da Vercel.
+10. Escreva no terminal:
 
-ETAPAS DA CRIAÇÃO
+```bash
+npx prisma migrate dev
+```
 
-1- Crie um repositório no Github com o arquivo do Next;
+- Isso fará a migração do banco de dados e criará nossa tabela.
 
-2- Faça o push dos arquivos para estar semeando o repositório com o Next.js;
-
-3- Abra o site da [Vercel](https://vercel.com) e crie sua conta;
-
-4- Na Dashboard, adicione um novo repositório conectando pelo seu Github; (Vercel importa seus repositórios diretamente de lá)
-
-5- Na parte de selecionar, escola o repositório criado e, caso não apareça, selecione o Framework de Deployment como Next.js; (Normalmente, em projetos criados pelo npx create em Next, ele já é identificado de forma automática pela Vercel.)
-
-6- Após o Deploy for concluído, acesse a página do seu arquivo na Vercel e na barra de navegação superior, escolha a opção "Storage";
-
-7- Clique em "Create Database" e selecione a Database Neon. Coloque também a localização de São Paulo; (Selecione o Plano Gratuíto)
-
-8- Caso a Database tenha sido criada de forma correta, você será encaminhado pra página aonde terá as configurações para o Connect do Banco de dados. No canto direito, clique em "Copy Snippet" para copiar as configurações;
-
-9- Acesse o arquivo .env e cole as configurações copiadas da Vercel;
-
-10(Final)- Escreva no Terminal ```npx prisma migrate dev``` para fazer a migração do banco de dados e criar nossa tabela.
-
-
-
-- Caso tenha funcionado, uma pasta com a data e o nome da sua migração (Colocado no Terminal) será criada.
+- Caso tenha funcionado, uma pasta com a data e o nome da sua migração (colocado no terminal) será criada.
 
 - Parabéns, você criou uma Database.
 
@@ -103,7 +92,7 @@ async function main() {
     console.log('Database seeded successfully!');
 }
 
-main()
+main();
 ```
 
 - Esse código cria uma conexão com o banco de dados e insere dados iniciais na tabela `teste`.
@@ -138,15 +127,14 @@ npm run seed
 
 - Se tudo estiver configurado corretamente, você verá a mensagem `Database seeded successfully!` no terminal.
 
-- Delete o código da função "main" após semear o banco.
+- Delete o código da função `main` após semear o banco.
 
-## 8 - Configurando o Front
+## 8 - Configurando o Front-End
 
-- Acesse o page.tsx e escreva este código
+- Acesse o `page.tsx` e escreva este código:
 
 ```jsx
 import prisma from "./lib/prisma";
-
 
 export default async function Home() {
   const info = await prisma.teste.findMany();
@@ -160,33 +148,32 @@ export default async function Home() {
             <p>Idade: {info.idade}</p>
             <p>Curso: {info.curso}</p>
           </div>
-          ))
-        }
+        ))}
       </div>
     </>
   );
 }
 ```
 
-- Este código importa a variável "prisma" que criamos na Lib
-- Cria uma função assíncrona Home() que irá ser a nossa página do site
-- Cria uma variável chamada info que vai fazer a busca no banco de dados com o findMany e retornar todas as informações que colocamos
-- Retorna uma div (Somente para centralizar eles)
-- Dentro desta div é gerado um info.map que irá criar nosso código com as informações colocadas no banco de dados.
+- Este código importa a variável `prisma` que criamos na lib.
+- Cria uma função assíncrona `Home()` que será a nossa página do site.
+- Cria uma variável chamada `info` que faz a busca no banco de dados com o `findMany` e retorna todas as informações que colocamos.
+- Retorna uma `div` (somente para centralizar os elementos).
+- Dentro desta `div`, é gerado um `info.map` que cria nosso código com as informações colocadas no banco de dados.
 
-## 9 - Salvando as alterações com um Commit (OBS: Leia o final do arquivo quando chegar aqui, IMPORTANTE)
+## 9 - Salvando as alterações com um Commit
 
-- Para salvar nosso arquivo no Github para que a Vercel consiga fazer o deploy, devemos commitar no Github para salvar as informações novas.
+- Para salvar nosso arquivo no GitHub para que a Vercel consiga fazer o deploy, devemos commitar no GitHub para salvar as informações novas.
 
 ```bash
-git add . // Adiciona todos os arquivos modificados
+git add . # Adiciona todos os arquivos modificados
 
-git commit -m "texto para commit" // Faz o commit com o nome colocado
+git commit -m "texto para commit" # Faz o commit com o nome colocado
 
-git push origin main // Envia as alterações feitas para o arquivo no Github
+git push origin main # Envia as alterações feitas para o arquivo no GitHub
 ```
 
-- Com isso, seu site já vai estar funcionado com um Link disponibilizado pela Vercel. (Somente clique na foto do site no teu Dashboard)
+- Com isso, seu site já estará funcionando com um link disponibilizado pela Vercel (basta clicar na foto do site no seu Dashboard).
 
 ## 10 (Extra e Final) - Teste local do site com localhost
 
@@ -196,14 +183,10 @@ git push origin main // Envia as alterações feitas para o arquivo no Github
 npm run dev
 ```
 
-- Após isso, escreva "https://localhost/3000" no seu navegador ou clique no link do terminal com CTRL + Clique esquerdo.
-
-
+- Após isso, escreva `http://localhost:3000` no seu navegador ou clique no link do terminal com `CTRL + Clique esquerdo`.
 
 ## IMPORTANTE / AVISO
 
-- Como isso foi um teste com o foco pra ensinar como uma API pode ser criada com o Prisma, PostgreSQL e Typescript, não terá um foco tão grande com o Next.
-
-- Next foi somente um Framework escolhido para facilitar e mostrar também como seria a estrutura de pastas... O Deploy no final vai falhar por várias questões (Alteração em regras do eslint, package.json, etc...).
-
-- Leve em consideração que, em partes futuras, não será necessário fazer essa "semeação" de informações, tendo em vista que o banco de dados terá as informações colocadas de diversas formas (Colocados pelo Manager da Database, inserido manualmente pelo service que utiliza, dentre outros...).
+- Como isso foi um teste com o foco em ensinar como uma API pode ser criada com o Prisma, PostgreSQL e TypeScript, não terá um foco tão grande no Next.js.
+- O Next.js foi escolhido apenas para facilitar e mostrar também como seria a estrutura de pastas. O deploy no final pode falhar por várias questões (alterações nas regras do eslint, package.json, etc.).
+- Leve em consideração que, em partes futuras, não será necessário fazer essa "semeação" de informações, tendo em vista que o banco de dados terá as informações colocadas de diversas formas (pelo manager da database, inserido manualmente pelo serviço que utiliza, dentre outros).
