@@ -1,4 +1,4 @@
-## Ensinando uma API básica para um projeto em Next.js (Focado em estudos)
+## Ensinando um Connect de banco de dados básico para um projeto em Next.js (Focado em estudos)
 
 - O projeto foi feito com base no Next.js (npx create-next-app@latest).
 - Não será focado no Front-End, mas terá um pouco de estilização para demonstração com Tailwind CSS.
